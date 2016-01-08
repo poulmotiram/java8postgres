@@ -1,0 +1,16 @@
+postgres:
+  image: postgres:9.4
+  ports:
+   - "5430:5432"
+
+javaapp:
+  image: poulmotiram/java8-maven:latest
+  volumes:
+   - /pgm:/pgm
+  working_dir: /pgm
+  links:
+   - postgres
+  command: bash -c "mvn clean install && env && /bin/bash"
+  stdin_open: true
+  tty: true
+
